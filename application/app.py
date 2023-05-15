@@ -193,7 +193,7 @@ def applaunch_arkimeviews_page():
 			In the event where Arkime's port number is changed,
 			 manually insert the port below '{}:[port]' and restart Flask application
 			"""
-			arkime_views[view["name"]] = "https://{}/sessions?view={}".format(request.remote_addr, view["id"])
+			arkime_views[view["name"]] = "http://{}:8005/sessions?view={}".format(request.remote_addr, view["id"])
 
 	# Else /api/views returns an error
 	else:

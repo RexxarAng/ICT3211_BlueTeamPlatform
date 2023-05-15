@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from crontab import CronTab
 import time, os, ast
 import requests
-from requests.auth import HTTPBasicAuth
+from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 from concurrent.futures import ThreadPoolExecutor
 
 # Import Local Files
@@ -721,8 +721,8 @@ def retrieve_arkime_views():
 		In the event where Arkime's port number is changed,
 		 manually insert the port below '{}:[port]' and restart Flask application
 		"""
-		request_views = requests.get("https://{}/api/views".format(request.remote_addr),
-						auth=HTTPBasicAuth(arkime_cred["arkime_user"], arkime_cred["arkime_password"]),
+		request_views = requests.get("http://{}:8005/api/views".format(request.remote_addr),
+						auth=HTTPDigestAuth(arkime_cred["arkime_user"], arkime_cred["arkime_password"]),
 						verify=False)
 
 		# If Arkime is online but unable to fetch data, might be due to authentication issue

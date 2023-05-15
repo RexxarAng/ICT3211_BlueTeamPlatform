@@ -3,13 +3,13 @@
 # A suggestion is the ~/home/$USER/Desktop folder.
 
 # Change this to $whoami without sudo
-USER="ubuntu"
+USER="vboxuser"
 
 # Kill previous instance of scrapyd
 kill $(pgrep -f scrapyd)
 
 # Start Scrapyd
-cd /home/$USER/Documents/scfami_spider/yara_scrapy
+#cd /home/$USER/Documents/scfami_spider/yara_scrapy
 #echo $(pwd)
 scrapyd >> scrapyd-logs.txt &
 
