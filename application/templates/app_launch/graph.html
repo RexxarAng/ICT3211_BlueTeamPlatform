@@ -1,0 +1,38 @@
+<head>
+	<title>Graph Views</title>
+</head>
+
+{% extends "base.html" %}
+
+{% block body %}
+
+<!--Page content-->
+<div class="container mt-5">
+	<h1>Graph Views</h1>
+
+	<div class="mb-3">
+		{% if "authenticate" in arkime_views %}
+		<h5>{{ arkime_views }}</h5>
+		Click here to <a href="/admin/app_launch">modify config settings</a>.
+		{% elif "Connection refused" in arkime_views %}
+		<h5>A connection to Arkime cannot be established. Is Arkime available?</h5>
+		{% elif "certificate verify failed" in arkime_views %}
+		<h5>Unable to verify HTTPS Certificate. Did you change the HTTP authentication mechanism?</h5>
+		{% else %}
+		<h5>Launch <b>Graph Views</b> in <b>Arkime</b>.</h5>
+		{% for view,url in arkime_views.items() %}
+		<button class="btn btn-{{ style[loop.index%5] }}" onclick="open_arkime_view(this)" value="{{ url }}">{{view|title}}</button>			
+		{% if loop.index%5 == 0 %}<br /><br />{% endif %}
+		{% endfor %}
+		{% endif %}
+		
+	</div>
+	<br/><br/><br/><br/>
+	<h1>Graph Views</h1>
+	<div class="mb-3">
+	<h5>Launch <b>Graph Views</b> in <b>SCFAMI Dashboard</b>.</h5>
+		<a class="btn btn-{{ style[1] }}" href="/app_launch/scfami_graph">View Graph</a>
+	</div>
+</div>
+
+{% endblock %}
