@@ -72,6 +72,44 @@ def admin_networkcapture_page():
 	return render_template("/admin/config_networkcapture.html", form=form)
 
 
+@app.route("/app_launch/graph", methods=["GET"], endpoint="app_launch.graph")
+def applaunch_graphviews_page():
+	"""Retrieve list of dictionary-per-view from Arkime /api/views"""
+	success, views = retrieve_arkime_views()
+
+	# If /api/views returns a valid list
+	if success:
+		arkime_views = {}
+		for view in views:
+			# Append each view's ID to their view's label
+			"""
+			In the event where Arkime's port number is changed,
+			 manually insert the port below '{}:[port]' and restart Flask application
+			"""
+			arkime_views[view["name"]] = "http://{}:8005/connections?view={}".format(request.remote_addr, view["id"])
+
+	# Else /api/views returns an error
+	else:
+		return render_template("/app_launch/graph.html", arkime_views=views)
+
+	button_style = ["info", "primary", "success", "danger", "warning"]
+	return render_template("/app_launch/graph.html", arkime_views=arkime_views, style=button_style)
+
+
+@app.route("/app_launch/scfami_graph", methods=["GET"], endpoint="app_launch.scfami_graph")
+def applaunch_scfami_graphview_page():
+	# net = Network()
+	# net.add_node(1, label="Node 1")
+	# net.add_node(2, label="Node 2")
+	# net.add_edge(1,2)
+
+	# net.show("network_graph.html")
+	# net.show_buttons()
+
+	# return render_template("/app_launch/scfami_graph.html",graph_file="network_graph.html")
+	return render_template("/app_launch/scfami_graph.html")
+
+
 ########## END Admin Config Pages ##########
 ########## START Data Transfer Pages ##########
 
