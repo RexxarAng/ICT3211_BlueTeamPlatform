@@ -1,6 +1,43 @@
 import json
+import os
+import dotenv
 from pyvis.network import Network
 import networkx as nx
+import requests
+from requests.auth import HTTPDigestAuth
+
+
+def retrieve_arkime_var():
+    dotenv_file = dotenv.find_dotenv(".arkime")
+    dotenv.load_dotenv(dotenv_file, override=True)  # Take environment variables from .arkime
+
+    return {
+        "arkime_user": os.environ["ARKIME_USER"],
+        "arkime_password": os.environ["ARKIME_PASSWORD"]}
+
+
+# URL of the API endpoint
+url = "http://127.0.0.1:8005/api/connections"
+
+arkime_cred = retrieve_arkime_var()
+
+# Send a GET request to the API endpoint
+response = requests.get(url,
+                        auth=HTTPDigestAuth(arkime_cred["arkime_user"], arkime_cred["arkime_password"]),
+                        verify=False)
+
+# Check if the request was successful (status code 200)
+if response.status_code == 200:
+    # Extract the JSON data from the response
+    data = response.json()
+
+    # Save the JSON data to a file
+    with open("connections.json", "w") as file:
+        json.dump(data, file)
+
+    print("JSON file downloaded successfully.")
+else:
+    print("Failed to download JSON file.")
 
 # Read the graph data from the JSON file
 with open("connections.json", "r") as file:
@@ -39,4 +76,3 @@ nodes_json = json.dumps(nodes)
 links_json = json.dumps(links)
 
 net.write_html("network_graph_dynamic_data.html")
-
