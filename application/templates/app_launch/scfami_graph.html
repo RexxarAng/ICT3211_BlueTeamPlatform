@@ -1,0 +1,15 @@
+<head>
+	<title>SCFAMI Graph</title>
+</head>
+
+{% extends "base.html" %}
+
+{% block body %}
+
+<body>
+    <div id="graph-container">
+        {{ graph_html | safe }}
+    </div>
+</body>
+
+{% endblock %}
