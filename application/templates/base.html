@@ -154,6 +154,11 @@ table, th, td { border: 1px solid black; border-collapse: collapse;}
 							{% if request.endpoint=="app_launch.arkime" %}class="dropdown-item active" aria-current="page"
 							{% else %}class="dropdown-item"{% endif %} href="/app_launch/arkime">
 							Arkime Views</a></li>
+						
+						<li><a
+							{% if request.endpoint=="app_launch.arkime" %}class="dropdown-item active" aria-current="page"
+							{% else %}class="dropdown-item"{% endif %} href="/app_launch/graph">
+							Graph Views</a></li>
 					</ul>
 				</li>
 
